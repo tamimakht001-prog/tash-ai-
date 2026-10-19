@@ -1,0 +1,1 @@
+T.A.S.H AI starter. Upload index.html, netlify.toml, and netlify/functions/chat.js to GitHub preserving folders. Connect repo to Netlify. Set GEMINI_API_KEY in Netlify environment variables. Never publish your API key.
