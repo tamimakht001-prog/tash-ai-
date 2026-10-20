@@ -1,1 +1,129 @@
-<!doctype html><html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>T.A.S.H AI</title><style>*{box-sizing:border-box}body{margin:0;background:#0b1020;color:#f4f7ff;font-family:system-ui,Arial;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:14px}.app{width:100%;max-width:720px;background:#121a30;border:1px solid #293753;border-radius:20px;overflow:hidden}header{padding:20px;border-bottom:1px solid #293753}h1{margin:0}header p,.note{color:#aab8d6}#chat{padding:16px;min-height:280px;max-height:55vh;overflow:auto}.msg{white-space:pre-wrap;line-height:1.5;padding:12px 14px;border-radius:14px;margin:10px 0}.bot{background:#202c49}.user{background:#174d73;margin-left:12%}form{display:flex;gap:8px;padding:14px;border-top:1px solid #293753}textarea{min-width:0;flex:1;min-height:48px;border:1px solid #354767;border-radius:12px;background:#0d1427;color:white;padding:12px;font:inherit}button{border:0;border-radius:12px;background:#5b7cfa;color:white;font-weight:700;padding:0 18px}.note{padding:0 16px 16px;font-size:12px}</style></head><body><main class="app"><header><h1>T.A.S.H AI</h1><p>তোমার AI সহকারী</p></header><section id="chat"><div class="msg bot">হ্যালো! আমি T.A.S.H AI। আমাকে কিছু জিজ্ঞেস করো।</div></section><form id="form"><textarea id="prompt" placeholder="এখানে লিখো..." required></textarea><button id="send">Send</button></form><div class="note">AI চালাতে Netlify Functions এবং GEMINI_API_KEY লাগবে।</div></main><script>const f=document.getElementById('form'),p=document.getElementById('prompt'),c=document.getElementById('chat'),s=document.getElementById('send');function add(t,k){let d=document.createElement('div');d.className='msg '+k;d.textContent=t;c.appendChild(d);c.scrollTop=c.scrollHeight;return d}f.onsubmit=async e=>{e.preventDefault();let message=p.value.trim();if(!message)return;add(message,'user');p.value='';s.disabled=true;let w=add('উত্তর তৈরি হচ্ছে...','bot');try{let r=await fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message})});let d=await r.json();w.textContent=d.reply||d.error||'উত্তর পাওয়া যায়নি।'}catch(_){w.textContent='AI backend পাওয়া যাচ্ছে না। Netlify Functions deploy হয়েছে কি না দেখো।'}finally{s.disabled=false}}</script></body></html>
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T.A.S.H AI</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#151d35">
+
+<style>
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b1020;
+  color: white;
+}
+header {
+  padding: 22px;
+  background: #151d35;
+  font-size: 24px;
+  font-weight: bold;
+  color: #8ab4ff;
+  text-align: center;
+}
+#chat {
+  padding: 16px;
+  height: 70vh;
+  overflow-y: auto;
+}
+.msg {
+  padding: 13px 15px;
+  margin: 12px 0;
+  border-radius: 14px;
+  max-width: 85%;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+.bot {
+  background: #1d2945;
+}
+.user {
+  background: #345bd8;
+  margin-left: auto;
+}
+form {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #151d35;
+}
+input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid #44506b;
+  border-radius: 12px;
+  background: #0b1020;
+  color: white;
+  font-size: 16px;
+}
+button {
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  background: #6d8cff;
+  color: white;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+<header>✦ T.A.S.H AI</header>
+
+<div id="chat">
+  <div class="msg bot">
+    Hello! 👋 Welcome to T.A.S.H AI.
+    I'm ready to chat with you!
+  </div>
+</div>
+
+<form id="form">
+  <input
+    id="input"
+    placeholder="Ask me anything..."
+    autocomplete="off"
+  >
+  <button type="submit">Send</button>
+</form>
+
+<script>
+const chat = document.getElementById('chat');
+const form = document.getElementById('form');
+const input = document.getElementById('input');
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const text = input.value.trim();
+  if (!text) return;
+
+  function add(message, cls) {
+    const div = document.createElement('div');
+    div.className = 'msg ' + cls;
+    div.textContent = message;
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  add(text, 'user');
+  input.value = '';
+
+  add(
+    'This is the first prototype. Connect an AI backend to get real AI answers.',
+    'bot'
+  );
+});
+</script>
+</body>
+</html>
