@@ -1,0 +1,11 @@
+{
+  "name": "T.A.S.H AI",
+  "short_name": "TASH AI",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "description": "T.A.S.H AI assistant for answering user questions.",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff"
+}
